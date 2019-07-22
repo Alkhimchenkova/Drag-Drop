@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .standford_bridge{
+        height: 100vh;
+        background-image: url("img/618863112_vafelnaya-i-saharnaya (1).jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .ball{
+        width:100px ;
+        height: 100px;
+
+    }
+</style>
+<body>
+<div class="standford_bridge">
+    <img  class="ball" src="img/football_PNG52798.png" alt="ball">
+</div>
+<script>
+let ball=document.querySelector('.ball');
+let stanford_bridge=document.querySelector('.standford_bridge');
+
+ball.onload=()=> {
+    //look after the click
+    ball.addEventListener('mousedown', () => {
+      //ready ball to the move
+    let coords=ball.getBoundingClientRect();
+    let shiftY=event.pageY-coords.top;
+    let shiftX=event.pageX-coords.left;
+
+        ball.style.position = 'absolute';
+        moveAt(event,shiftX,shiftY);
+        //move to the screen
+        stanford_bridge.onmousemove=()=>
+        {
+            moveAt(event,shiftX,shiftY);
+        }
+        //finish of the moving
+        ball.onmouseup=()=>{
+            stanford_bridge.onmousemove=null;
+            ball.onmouseup=null;
+        }
+
+    });
+
+    function moveAt(e,shiftX, shiftY) {
+        ball.style.top = (e.pageY-shiftY) + 'px';
+        ball.style.left = (e.pageX-shiftX) + 'px';
+
+    }
+    //cancell the standard drag&drop(html5)
+    ball.ondragstart=()=>{return false}
+}
+</script>
+</body>
+</html>
